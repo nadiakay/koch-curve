@@ -21,8 +21,8 @@ function init() {
   var ticks = 0;
 
   var timer = setInterval(() => {
-    if (nStep < endStep) render();
-  }, 100);
+    if (pos.x < w - 10 && pos.y < h - 10) render();
+  }, 20);
 }
 
 function render() {
