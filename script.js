@@ -5,32 +5,41 @@ var ctx = canvas.getContext("2d");
 document.body.appendChild(canvas);
 
 var seq = ["0"];
-var pos = (w / 2, h / 2);
-var angle = 0;
+var pos = { x: 10, y: 10 };
+var angle = 0; // in degrees
 var nStep = 0,
-  endStep = 20;
+  endStep = 1000,
+  stepLen = 10;
 
 init();
 
 function init() {
   ctx.strokeStyle = "white";
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
 
   var ticks = 0;
 
   var timer = setInterval(() => {
     if (nStep < endStep) render();
-  }, 1000);
+  }, 100);
 }
 
 function render() {
   console.log("render");
   if (nStep >= seq.length) seq = seq.concat(complement(seq));
+  if (seq[nStep] == "0") {
+    step();
+    angle += 60;
+  } else angle += 180;
   nStep++;
 }
 
 function step() {
-  var dx = cos(step_len),
-    dy = sin(step_len);
+  pos.x += stepLen * Math.cos(angle * (Math.PI / 180));
+  pos.y += stepLen * Math.sin(angle * (Math.PI / 180));
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
 }
 
 function complement(seq) {
